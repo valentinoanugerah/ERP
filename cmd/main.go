@@ -8,12 +8,18 @@ import (
 )
 
 func main() {
-	_, err := config.ConnectDB()
+	db, err := config.ConnectDB()
 	if err != nil {
 		log.Fatalf("Database error: %v", err)
 	}
+	defer func() {
+		sqlDB, _ := db.DB()
+		sqlDB.Close()
+	}()
 
-	migration.RunMigration()
+	log.Println("✅ Koneksi ke database berhasil.")
+
+	migration.RunMigration(db)
 
 	log.Println("🚀 Aplikasi ERP berjalan...")
 }

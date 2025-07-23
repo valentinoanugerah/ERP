@@ -3,17 +3,12 @@ package migration
 import (
 	"log"
 
-	"github.com/valentinoanugerah/ERP/config"
 	"github.com/valentinoanugerah/ERP/model"
+	"gorm.io/gorm"
 )
 
-func RunMigration() {
-	db, err := config.ConnectDB()
-	if err != nil {
-		log.Fatal("Gagal koneksi ke database:", err)
-	}
-
-	err = db.AutoMigrate(
+func RunMigration(db *gorm.DB) {
+	err := db.AutoMigrate(
 		&model.AuditLog{},
 		&model.Customer{},
 		&model.Product{},
@@ -28,8 +23,8 @@ func RunMigration() {
 	)
 
 	if err != nil {
-		log.Fatal("Migrasi gagal:", err)
+		log.Fatal("❌ Migrasi gagal:", err)
 	}
 
-	log.Println("Migrasi berhasil dijalankan!")
+	log.Println("✅ Migrasi berhasil dijalankan!")
 }
