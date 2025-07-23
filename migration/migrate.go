@@ -1,9 +1,9 @@
 package migration
 
 import (
-	"log"
-
+	_"github.com/valentinoanugerah/ERP/config"
 	"github.com/valentinoanugerah/ERP/model"
+	"log"
 	"gorm.io/gorm"
 )
 
@@ -23,8 +23,8 @@ func RunMigration(db *gorm.DB) {
 	)
 
 	if err != nil {
-		log.Fatal("❌ Migrasi gagal:", err)
+		log.Fatal("Migrasi gagal:", err)
 	}
 
-	log.Println("✅ Migrasi berhasil dijalankan!")
+	log.Println("Migrasi berhasil dijalankan!")
 }
