@@ -1,20 +1,28 @@
 package config
 
 import (
-	"github.com/jmoiron/sqlx"
-	_"github.com/lib/pq"
 	"fmt"
 	"log"
+
+	"github.com/jmoiron/sqlx" 
+	_ "github.com/lib/pq"     
 )
+
 
 var DB *sqlx.DB
 
-func connect(){
+
+func ConnectDB() (*sqlx.DB, error) {
+	
 	db, err := sqlx.Connect("postgres", "user=valentinoanugerah dbname=erp sslmode=disable")
 	if err != nil {
-		log.Fatalln(err)
+		log.Println("Gagal koneksi ke database:", err)
+		return nil, err
 	}
 
-	fmt.Println("Koneksi berhasil!")
-	defer db.Close()
+	
+	DB = db
+
+	fmt.Println("Koneksi berhasil ke database PostgreSQL")
+	return db, nil
 }
