@@ -4,18 +4,16 @@ import (
 	"log"
 
 	"github.com/valentinoanugerah/ERP/config"
+	"github.com/valentinoanugerah/ERP/migration"
 )
 
 func main() {
-	// Inisialisasi koneksi database
-	db, err := config.ConnectDB()
+	_, err := config.ConnectDB()
 	if err != nil {
 		log.Fatalf("Database error: %v", err)
 	}
-	defer db.Close()
 
-	log.Println("✅ Koneksi ke database berhasil.")
+	migration.RunMigration()
+
 	log.Println("🚀 Aplikasi ERP berjalan...")
-
-	// TODO: Tambahkan inisialisasi router, migration, handler, dsb.
 }

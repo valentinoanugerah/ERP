@@ -4,25 +4,21 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/jmoiron/sqlx" 
-	_ "github.com/lib/pq"     
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
+var DB *gorm.DB
 
-var DB *sqlx.DB
-
-
-func ConnectDB() (*sqlx.DB, error) {
-	
-	db, err := sqlx.Connect("postgres", "user=valentinoanugerah dbname=erp sslmode=disable")
+func ConnectDB() (*gorm.DB, error) {
+	dsn := "user=valentinoanugerah dbname=erp sslmode=disable"
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Println("Gagal koneksi ke database:", err)
+		log.Println("Gagal koneksi ke database")
 		return nil, err
 	}
 
-	
+	fmt.Println("Koneksi berhasil!")
 	DB = db
-
-	fmt.Println("Koneksi berhasil ke database PostgreSQL")
 	return db, nil
 }
